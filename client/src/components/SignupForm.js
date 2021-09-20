@@ -35,16 +35,13 @@ const SignupForm = () => {
       event.stopPropagation();
     }
 
+    console.log("run before");
     try {
-      const response = await createUser({ variables: { ...userFormData } });
+      const { response } = await createUser({ variables: { ...userFormData } });
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
+      console.log("runs after");
 
-      const { token, user } = await response
-      console.log(user);
-      Auth.login(token);
+      Auth.login(response.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
